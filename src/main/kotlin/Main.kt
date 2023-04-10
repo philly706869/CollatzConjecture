@@ -3,7 +3,7 @@ import kotlin.math.ceil
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
-fun main() = visualize(collatzConjecture(Scanner(System.`in`).nextInt()))
+fun main() = visualize(collatzConjectureList(Scanner(System.`in`).nextInt()))
 
 fun visualize(list: List<Int>, width: Int = 100) {
     val max = list.max()
@@ -28,13 +28,13 @@ fun visualize(list: List<Int>, width: Int = 100) {
     print(string.toString())
 }
 
-fun collatzConjecture(num: Int): List<Int> {
+fun collatzConjectureList(num: Int): List<Int> {
     if (num <= 0) throw IllegalArgumentException("num must be greater then 0")
     var number = num
     val list = mutableListOf<Int>()
     list.add(number)
     while (number != 1) {
-        if (number % 2 == 1) {
+        if (number and 1 == 1) {
             number = number * 3 + 1
             list.add(number)
         }
@@ -42,4 +42,20 @@ fun collatzConjecture(num: Int): List<Int> {
         list.add(number)
     }
     return list
+}
+
+fun collatzConjecture(num: Int): Int {
+    if (num <= 0) throw IllegalArgumentException("num must be greater then 0")
+    var number = num
+    var count = 0
+    while (number != 1) {
+        //if (n and n - 1)
+        if (number and 1 == 1) { // number % 2 == 1
+            number = number * 3 + 1
+            count++
+        }
+        number = number ushr 1 // number /= 2
+        count++
+    }
+    return count
 }
